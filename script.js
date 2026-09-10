@@ -288,7 +288,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const carouselCounter = document.getElementById('carouselCounter');
     const carouselPrev = document.getElementById('carouselPrev');
     const carouselNext = document.getElementById('carouselNext');
-    const galleryThumbs = document.querySelectorAll('.gallery-thumb');
     const lightbox = document.getElementById('galleryLightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxClose = document.getElementById('lightboxClose');
@@ -323,20 +322,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Activate first slide
         slides[0].classList.add('active');
-        if (galleryThumbs.length > 0) galleryThumbs[0].classList.add('active');
 
         function goToSlide(index) {
             if (index === currentSlide) return;
 
             slides[currentSlide].classList.remove('active');
             dots[currentSlide].classList.remove('active');
-            if (galleryThumbs[currentSlide]) galleryThumbs[currentSlide].classList.remove('active');
 
             currentSlide = ((index % totalSlides) + totalSlides) % totalSlides;
 
             slides[currentSlide].classList.add('active');
             dots[currentSlide].classList.add('active');
-            if (galleryThumbs[currentSlide]) galleryThumbs[currentSlide].classList.add('active');
 
             carouselCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
 
@@ -428,17 +424,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Start auto-slide
         startAutoSlide();
 
-        // ---- Thumbnail Click → Navigate Carousel ----
-        galleryThumbs.forEach(thumb => {
-            thumb.addEventListener('click', () => {
-                const index = parseInt(thumb.getAttribute('data-index'));
-                goToSlide(index);
-                startAutoSlide();
-
-                // Scroll to carousel
-                carouselEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            });
-        });
 
         // ---- Lightbox ----
         const galleryImages = [];
@@ -483,14 +468,6 @@ document.addEventListener('DOMContentLoaded', () => {
             openLightbox(currentSlide);
         });
 
-        // Click thumbnail to open lightbox (on second click / or use a dedicated approach)
-        galleryThumbs.forEach(thumb => {
-            let clickTimeout = null;
-            thumb.addEventListener('dblclick', () => {
-                const index = parseInt(thumb.getAttribute('data-index'));
-                openLightbox(index);
-            });
-        });
 
         // Lightbox controls
         lightboxClose.addEventListener('click', closeLightbox);

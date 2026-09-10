@@ -2092,81 +2092,6 @@ ul {
     transition: width linear;
 }
 
-/* ---- Thumbnail Grid ---- */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-}
-
-.gallery-thumb {
-    aspect-ratio: 1 / 1;
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    cursor: pointer;
-    position: relative;
-    border: 2px solid transparent;
-    transition: var(--transition-smooth);
-    box-shadow: var(--shadow-xs);
-}
-
-.gallery-thumb::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(27, 42, 74, 0.4) 0%, transparent 50%);
-    opacity: 0;
-    transition: var(--transition-smooth);
-}
-
-.gallery-thumb::before {
-    content: '\f00e';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.5);
-    z-index: 2;
-    color: #fff;
-    font-size: 1.4rem;
-    opacity: 0;
-    transition: var(--transition-smooth);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.gallery-thumb:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--accent-secondary);
-}
-
-.gallery-thumb:hover::after {
-    opacity: 1;
-}
-
-.gallery-thumb:hover::before {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-}
-
-.gallery-thumb.active {
-    border-color: var(--accent-secondary);
-    box-shadow: 0 0 0 3px rgba(196, 154, 42, 0.25), var(--shadow-md);
-}
-
-.gallery-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    transition: var(--transition-smooth);
-}
-
-.gallery-thumb:hover img {
-    transform: scale(1.08);
-}
 
 /* ---- Lightbox Modal ---- */
 .gallery-lightbox {
@@ -2295,12 +2220,6 @@ ul {
 }
 
 /* ---- Gallery Responsive ---- */
-@media (max-width: 1024px) {
-    .gallery-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-    }
-}
 
 @media (max-width: 768px) {
     .gallery-carousel {
@@ -2342,14 +2261,6 @@ ul {
         width: 20px;
     }
 
-    .gallery-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-    }
-
-    .gallery-thumb {
-        border-radius: var(--radius-xs);
-    }
 
     .lightbox-nav {
         width: 44px;
@@ -2373,10 +2284,6 @@ ul {
 }
 
 @media (max-width: 480px) {
-    .gallery-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 6px;
-    }
 
     .carousel-indicators {
         display: none;
