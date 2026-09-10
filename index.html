@@ -75,6 +75,7 @@
                 <li><a href="#publications" class="nav-link">Publications</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#awards" class="nav-link">Awards</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
@@ -807,6 +808,78 @@
                 </div>
             </div>
         </section>
+
+        <!-- ======= Gallery Section ======= -->
+        <section id="gallery" class="section gallery">
+            <div class="container">
+                <div class="section-header" data-reveal>
+                    <span class="section-tag">Photo Gallery</span>
+                    <h2 class="section-title">Gallery</h2>
+                    <p class="section-description">A visual journey through academic milestones, research events, conferences, and professional engagements.</p>
+                </div>
+
+                <!-- Slideshow Carousel -->
+                <div class="gallery-carousel" data-reveal>
+                    <div class="carousel-viewport" id="carouselViewport">
+                        <div class="carousel-track" id="carouselTrack">
+                            <div class="carousel-slide"><img src="Gallery/723A1774.JPG" alt="Gallery Photo 1" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/723A1945.JPG" alt="Gallery Photo 2" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/723A8739.JPG" alt="Gallery Photo 3" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/AKC04848.JPG" alt="Gallery Photo 4" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/AKC05076.JPG" alt="Gallery Photo 5" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/AKC05131.JPG" alt="Gallery Photo 6" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/AKC08908.JPG" alt="Gallery Photo 7" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/BCP00679.JPG" alt="Gallery Photo 8" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/BCP02271.JPG" alt="Gallery Photo 9" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/DSC06083.JPG" alt="Gallery Photo 10" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/DSC06208.JPG" alt="Gallery Photo 11" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/DSC06269.JPG" alt="Gallery Photo 12" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/HKR07263.JPG" alt="Gallery Photo 13" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/SVDR3002.JPG" alt="Gallery Photo 14" loading="lazy"></div>
+                            <div class="carousel-slide"><img src="Gallery/SVDR9983.JPG" alt="Gallery Photo 15" loading="lazy"></div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn carousel-btn-prev" id="carouselPrev" aria-label="Previous slide">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-btn carousel-btn-next" id="carouselNext" aria-label="Next slide">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="carousel-indicators" id="carouselIndicators"></div>
+                    <div class="carousel-counter" id="carouselCounter">1 / 15</div>
+                </div>
+
+                <!-- Thumbnail Grid -->
+                <div class="gallery-grid" data-reveal id="galleryGrid">
+                    <div class="gallery-thumb" data-index="0"><img src="Gallery/723A1774.JPG" alt="Gallery Thumbnail 1" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="1"><img src="Gallery/723A1945.JPG" alt="Gallery Thumbnail 2" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="2"><img src="Gallery/723A8739.JPG" alt="Gallery Thumbnail 3" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="3"><img src="Gallery/AKC04848.JPG" alt="Gallery Thumbnail 4" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="4"><img src="Gallery/AKC05076.JPG" alt="Gallery Thumbnail 5" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="5"><img src="Gallery/AKC05131.JPG" alt="Gallery Thumbnail 6" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="6"><img src="Gallery/AKC08908.JPG" alt="Gallery Thumbnail 7" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="7"><img src="Gallery/BCP00679.JPG" alt="Gallery Thumbnail 8" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="8"><img src="Gallery/BCP02271.JPG" alt="Gallery Thumbnail 9" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="9"><img src="Gallery/DSC06083.JPG" alt="Gallery Thumbnail 10" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="10"><img src="Gallery/DSC06208.JPG" alt="Gallery Thumbnail 11" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="11"><img src="Gallery/DSC06269.JPG" alt="Gallery Thumbnail 12" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="12"><img src="Gallery/HKR07263.JPG" alt="Gallery Thumbnail 13" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="13"><img src="Gallery/SVDR3002.JPG" alt="Gallery Thumbnail 14" loading="lazy"></div>
+                    <div class="gallery-thumb" data-index="14"><img src="Gallery/SVDR9983.JPG" alt="Gallery Thumbnail 15" loading="lazy"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Lightbox Modal -->
+        <div class="gallery-lightbox" id="galleryLightbox">
+            <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox"><i class="fas fa-times"></i></button>
+            <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
+            <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
+            <div class="lightbox-content">
+                <img src="" alt="Gallery Full View" id="lightboxImg">
+            </div>
+            <div class="lightbox-counter" id="lightboxCounter">1 / 15</div>
+        </div>
 
         <!-- ======= Contact Section ======= -->
         <section id="contact" class="section contact">

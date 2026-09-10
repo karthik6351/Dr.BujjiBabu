@@ -279,4 +279,263 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ========================================================
+    // Gallery — Carousel, Thumbnails, Lightbox
+    // ========================================================
+
+    const carouselTrack = document.getElementById('carouselTrack');
+    const carouselIndicators = document.getElementById('carouselIndicators');
+    const carouselCounter = document.getElementById('carouselCounter');
+    const carouselPrev = document.getElementById('carouselPrev');
+    const carouselNext = document.getElementById('carouselNext');
+    const galleryThumbs = document.querySelectorAll('.gallery-thumb');
+    const lightbox = document.getElementById('galleryLightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+
+    if (carouselTrack) {
+        const slides = carouselTrack.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        let currentSlide = 0;
+        let autoSlideInterval = null;
+        let autoSlideDuration = 4000;
+        let progressBar = null;
+        let progressAnimation = null;
+
+        // Create progress bar
+        progressBar = document.createElement('div');
+        progressBar.className = 'carousel-progress';
+        carouselTrack.closest('.gallery-carousel').appendChild(progressBar);
+
+        // Create indicator dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+            dot.addEventListener('click', () => goToSlide(i));
+            carouselIndicators.appendChild(dot);
+        }
+
+        const dots = carouselIndicators.querySelectorAll('.carousel-dot');
+
+        // Activate first slide
+        slides[0].classList.add('active');
+        if (galleryThumbs.length > 0) galleryThumbs[0].classList.add('active');
+
+        function goToSlide(index) {
+            if (index === currentSlide) return;
+
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            if (galleryThumbs[currentSlide]) galleryThumbs[currentSlide].classList.remove('active');
+
+            currentSlide = ((index % totalSlides) + totalSlides) % totalSlides;
+
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+            if (galleryThumbs[currentSlide]) galleryThumbs[currentSlide].classList.add('active');
+
+            carouselCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+
+            // Restart progress animation
+            resetProgress();
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentSlide - 1);
+        }
+
+        // Progress bar animation
+        function resetProgress() {
+            if (progressBar) {
+                progressBar.style.transition = 'none';
+                progressBar.style.width = '0%';
+
+                // Force reflow
+                progressBar.offsetHeight;
+
+                progressBar.style.transition = `width ${autoSlideDuration}ms linear`;
+                progressBar.style.width = '100%';
+            }
+        }
+
+        // Auto-slide
+        function startAutoSlide() {
+            stopAutoSlide();
+            resetProgress();
+            autoSlideInterval = setInterval(nextSlide, autoSlideDuration);
+        }
+
+        function stopAutoSlide() {
+            if (autoSlideInterval) {
+                clearInterval(autoSlideInterval);
+                autoSlideInterval = null;
+            }
+        }
+
+        // Button handlers
+        carouselPrev.addEventListener('click', () => {
+            prevSlide();
+            startAutoSlide();
+        });
+
+        carouselNext.addEventListener('click', () => {
+            nextSlide();
+            startAutoSlide();
+        });
+
+        // Pause on hover
+        const carouselEl = carouselTrack.closest('.gallery-carousel');
+        carouselEl.addEventListener('mouseenter', () => {
+            stopAutoSlide();
+            if (progressBar) {
+                progressBar.style.transition = 'none';
+                progressBar.style.width = progressBar.offsetWidth + 'px';
+            }
+        });
+        carouselEl.addEventListener('mouseleave', () => {
+            startAutoSlide();
+        });
+
+        // Touch swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carouselEl.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        carouselEl.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+                startAutoSlide();
+            }
+        }, { passive: true });
+
+        // Start auto-slide
+        startAutoSlide();
+
+        // ---- Thumbnail Click → Navigate Carousel ----
+        galleryThumbs.forEach(thumb => {
+            thumb.addEventListener('click', () => {
+                const index = parseInt(thumb.getAttribute('data-index'));
+                goToSlide(index);
+                startAutoSlide();
+
+                // Scroll to carousel
+                carouselEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        });
+
+        // ---- Lightbox ----
+        const galleryImages = [];
+        slides.forEach(slide => {
+            const img = slide.querySelector('img');
+            if (img) galleryImages.push(img.src);
+        });
+
+        let lightboxIndex = 0;
+
+        function openLightbox(index) {
+            lightboxIndex = index;
+            lightboxImg.src = galleryImages[index];
+            lightboxCounter.textContent = `${index + 1} / ${totalSlides}`;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            stopAutoSlide();
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+            startAutoSlide();
+        }
+
+        function lightboxNavigate(direction) {
+            lightboxIndex = ((lightboxIndex + direction) % totalSlides + totalSlides) % totalSlides;
+            lightboxImg.style.opacity = '0';
+            lightboxImg.style.transform = 'scale(0.92)';
+
+            setTimeout(() => {
+                lightboxImg.src = galleryImages[lightboxIndex];
+                lightboxCounter.textContent = `${lightboxIndex + 1} / ${totalSlides}`;
+                lightboxImg.style.opacity = '1';
+                lightboxImg.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        // Double-click carousel slide to open lightbox
+        carouselEl.addEventListener('dblclick', (e) => {
+            if (e.target.closest('.carousel-btn')) return;
+            openLightbox(currentSlide);
+        });
+
+        // Click thumbnail to open lightbox (on second click / or use a dedicated approach)
+        galleryThumbs.forEach(thumb => {
+            let clickTimeout = null;
+            thumb.addEventListener('dblclick', () => {
+                const index = parseInt(thumb.getAttribute('data-index'));
+                openLightbox(index);
+            });
+        });
+
+        // Lightbox controls
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxPrev.addEventListener('click', () => lightboxNavigate(-1));
+        lightboxNext.addEventListener('click', () => lightboxNavigate(1));
+
+        // Click backdrop to close
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox || e.target === lightbox.querySelector('.lightbox-content')) {
+                closeLightbox();
+            }
+        });
+
+        // Lightbox touch swipe
+        let lbTouchStartX = 0;
+        lightbox.addEventListener('touchstart', (e) => {
+            lbTouchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        lightbox.addEventListener('touchend', (e) => {
+            const diff = lbTouchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) {
+                lightboxNavigate(diff > 0 ? 1 : -1);
+            }
+        }, { passive: true });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') lightboxNavigate(-1);
+                if (e.key === 'ArrowRight') lightboxNavigate(1);
+            } else {
+                // Carousel keyboard nav when gallery section is in view
+                const gallerySection = document.getElementById('gallery');
+                if (gallerySection) {
+                    const rect = gallerySection.getBoundingClientRect();
+                    const inView = rect.top < window.innerHeight && rect.bottom > 0;
+                    if (inView) {
+                        if (e.key === 'ArrowLeft') { prevSlide(); startAutoSlide(); }
+                        if (e.key === 'ArrowRight') { nextSlide(); startAutoSlide(); }
+                    }
+                }
+            }
+        });
+    }
+
 });
