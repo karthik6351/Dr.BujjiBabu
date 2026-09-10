@@ -1,0 +1,7 @@
+# Dr. D. Bujji Babu Portfolio — Robots.txt
+User-agent: *
+Allow: /
+Disallow: /Gallery/*.JPG$
+
+# Sitemap
+Sitemap: https://drbujjibabu.vercel.app/sitemap.xml
