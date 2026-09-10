@@ -1950,7 +1950,7 @@ ul {
     width: 100%;
     aspect-ratio: 16 / 10;
     overflow: hidden;
-    background: #0d0d0d;
+    background: var(--bg-tertiary);
 }
 
 .carousel-track {
@@ -1980,7 +1980,7 @@ ul {
 .carousel-slide img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
     display: block;
 }
